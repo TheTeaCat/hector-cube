@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-let camera, scene, renderer;
+let camera, scene, renderer, object, currentHectorObject;
 
 init();
 animate();
@@ -11,8 +11,6 @@ function init() {
 
   scene = new THREE.Scene();
 
-  let object;
-
   const ambientLight = new THREE.AmbientLight( 0xcccccc, 0.4 );
   scene.add( ambientLight );
 
@@ -20,26 +18,45 @@ function init() {
   camera.add( pointLight );
   scene.add( camera );
 
+  createHectorObject();
+
+  renderer = new THREE.WebGLRenderer( { antialias: true } );
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+
+  window.addEventListener( 'resize', onWindowResize );
+}
+
+function createHectorObject() {
   const map = new THREE.TextureLoader().load( 'assets/imgs/hector-texture.jpg' );
   map.wrapS = map.wrapT = THREE.RepeatWrapping;
   map.anisotropy = 16;
   const material = new THREE.MeshPhongMaterial( { map: map, side: THREE.DoubleSide } );
 
-  // PICK A RANDOM HECTOR SHAPE
-  switch (Math.floor(Math.random()*5)) {
-    case 0:
+  // GET RID OF THE OLD HECTOR OBJECT
+  if (object) {
+    scene.remove(object)
+  }
+
+  // PICK A RANDOM NEW HECTOR OBJECT
+  currentHectorObject = [
+    "cube","sphere","cylinder","torus","lathe"
+  ].filter(obj => obj != currentHectorObject)[Math.floor(Math.random()*4)]
+  switch (currentHectorObject) {
+    case "cube":
       object = new THREE.Mesh( new THREE.BoxGeometry( 250, 250, 250 ), material );
       break
-    case 1:
+    case "sphere":
       object = new THREE.Mesh( new THREE.SphereGeometry( 150, 20, 10 ), material );
       break
-    case 2:
+    case "cylinder":
       object = new THREE.Mesh( new THREE.CylinderGeometry( 100, 200, 200, 40, 5 ), material );
       break
-    case 3:
+    case "torus":
       object = new THREE.Mesh( new THREE.TorusGeometry( 120, 70, 20, 20 ), material );
       break
-    case 4:
+    case "lathe":
       const points = [];
       for ( let i = 0; i < 50; i ++ ) {
         points.push(
@@ -54,15 +71,10 @@ function init() {
   }
 
   object.position.set( 0, 0, 0 );
-  scene.add( object );
-
-  renderer = new THREE.WebGLRenderer( { antialias: true } );
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  document.body.appendChild( renderer.domElement );
-
-  window.addEventListener( 'resize', onWindowResize );
+  scene.add(object);
 }
+window.onclick = createHectorObject
+window.onkeydown = createHectorObject
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
