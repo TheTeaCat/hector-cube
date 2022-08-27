@@ -11,7 +11,7 @@ Made with [threejs](https://threejs.org/) + [eleventy](https://www.11ty.dev/)
 Should be as simple as:
 
 ```bash
-git clone git@github.com:TheTeaCat/hectorcube.git
+git clone git@github.com:TheTeaCat/hector-cube.git
 cd hectorcube
 npm install
 npm run watch
