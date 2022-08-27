@@ -25,7 +25,34 @@ function init() {
   map.anisotropy = 16;
   const material = new THREE.MeshPhongMaterial( { map: map, side: THREE.DoubleSide } );
 
-  object = new THREE.Mesh( new THREE.BoxGeometry( 250, 250, 250 ), material );
+  // PICK A RANDOM HECTOR SHAPE
+  switch (Math.floor(Math.random()*5)) {
+    case 0:
+      object = new THREE.Mesh( new THREE.BoxGeometry( 250, 250, 250 ), material );
+      break
+    case 1:
+      object = new THREE.Mesh( new THREE.SphereGeometry( 150, 20, 10 ), material );
+      break
+    case 2:
+      object = new THREE.Mesh( new THREE.CylinderGeometry( 100, 200, 200, 40, 5 ), material );
+      break
+    case 3:
+      object = new THREE.Mesh( new THREE.TorusGeometry( 120, 70, 20, 20 ), material );
+      break
+    case 4:
+      const points = [];
+      for ( let i = 0; i < 50; i ++ ) {
+        points.push(
+          new THREE.Vector2(
+            Math.sin(i * 0.2) * Math.sin(i * 0.1) * 25 + 110,
+            (i - 20) * 5
+          )
+        );
+      }
+      object = new THREE.Mesh( new THREE.LatheGeometry( points, 20 ), material );
+      break
+  }
+
   object.position.set( 0, 0, 0 );
   scene.add( object );
 
