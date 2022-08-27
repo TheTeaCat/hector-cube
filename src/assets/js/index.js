@@ -42,7 +42,7 @@ function createHectorObject() {
   // PICK A RANDOM NEW HECTOR OBJECT
   currentHectorObject = [
     "cube","sphere","frustum","cylinder","torus","tetrahedron","circle","plane","lathe"
-  ].filter(obj => obj != currentHectorObject)[Math.floor(Math.random()*9)]
+  ].filter(obj => obj != currentHectorObject)[Math.floor(Math.random()*8)]
   switch (currentHectorObject) {
     case "cube":
       object = new THREE.Mesh( new THREE.BoxGeometry( 250, 250, 250 ), material );
