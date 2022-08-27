@@ -41,8 +41,8 @@ function createHectorObject() {
 
   // PICK A RANDOM NEW HECTOR OBJECT
   currentHectorObject = [
-    "cube","sphere","cylinder","torus","tetrahedron","circle","plane","lathe"
-  ].filter(obj => obj != currentHectorObject)[Math.floor(Math.random()*8)]
+    "cube","sphere","frustum","cylinder","torus","tetrahedron","circle","plane","lathe"
+  ].filter(obj => obj != currentHectorObject)[Math.floor(Math.random()*9)]
   switch (currentHectorObject) {
     case "cube":
       object = new THREE.Mesh( new THREE.BoxGeometry( 250, 250, 250 ), material );
@@ -50,8 +50,11 @@ function createHectorObject() {
     case "sphere":
       object = new THREE.Mesh( new THREE.SphereGeometry( 150, 20, 10 ), material );
       break
-    case "cylinder":
+    case "frustum":
       object = new THREE.Mesh( new THREE.CylinderGeometry( 100, 200, 200, 40, 5 ), material );
+      break
+    case "cylinder":
+      object = new THREE.Mesh( new THREE.CylinderGeometry( 75, 75, 350, 40, 5 ), material );
       break
     case "torus":
       object = new THREE.Mesh( new THREE.TorusGeometry( 120, 70, 20, 20 ), material );
