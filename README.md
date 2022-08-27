@@ -12,7 +12,7 @@ Should be as simple as:
 
 ```bash
 git clone git@github.com:TheTeaCat/hector-cube.git
-cd hectorcube
+cd hector-cube
 npm install
 npm run watch
 ```
